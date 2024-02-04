@@ -6,9 +6,12 @@ import android.os.Bundle
 import android.util.Patterns
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import com.example.carpentryconnect.MainActivity
 import com.example.carpentryconnect.R
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.auth.FirebaseAuth
 
 class SignUpActivity : AppCompatActivity() {
 
@@ -23,6 +26,7 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var countryContainer: TextInputLayout
     private lateinit var numberContainer: TextInputLayout
     private lateinit var signUpButton: Button
+    private lateinit var firebaseAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +43,7 @@ class SignUpActivity : AppCompatActivity() {
         countryContainer = findViewById(R.id.countryContainer)
         numberContainer = findViewById(R.id.numberContainer)
         signUpButton = findViewById(R.id.signup)
+        firebaseAuth = FirebaseAuth.getInstance()
 
 
         haveAnAccount()
@@ -86,7 +91,18 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun sendData(email: String, password: String, name: String, country: String, phoneNumber: String) {
-
+        firebaseAuth = FirebaseAuth.getInstance()
+        firebaseAuth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    Toast.makeText(this, "Account Created Successfully", Toast.LENGTH_LONG).show()
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                } else {
+                    Toast.makeText(this, "Account Creation Failed", Toast.LENGTH_SHORT).show()
+                }
+            }
     }
 
 
