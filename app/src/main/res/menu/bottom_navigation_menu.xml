@@ -5,11 +5,11 @@
         android:title="@string/home"
         android:icon="@drawable/baseline_home" />
 
-    <item android:id="@+id/donations"
+    <item android:id="@+id/search"
         android:title="@string/search"
         android:icon="@drawable/baseline_volunteer_activism_24" />
 
-    <item android:id="@+id/map"
+    <item android:id="@+id/jobs"
         android:title="@string/application"
         android:icon="@drawable/baseline_work" />
 
